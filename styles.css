@@ -111,3 +111,123 @@ button:hover {
         border: 2px solid currentColor;
     }
 }
+
+/* Custom styles for background removal tools */
+#selectionCanvas {
+    cursor: crosshair;
+    pointer-events: auto !important;
+}
+
+#selectionCanvas.select-mode {
+    cursor: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><circle cx="10" cy="10" r="8" fill="none" stroke="green" stroke-width="2"/></svg>'), crosshair;
+}
+
+#selectionCanvas.erase-mode {
+    cursor: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><circle cx="10" cy="10" r="8" fill="none" stroke="red" stroke-width="2"/></svg>'), crosshair;
+}
+
+/* Algorithm selection styling */
+#algorithmSelect {
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12"><path fill="%23374151" d="M6 9L1.5 4.5h9L6 9z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 12px;
+    padding-right: 40px;
+}
+
+/* Custom selection tool buttons */
+.selection-tools button {
+    min-width: 100px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.selection-tools button.active {
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+}
+
+/* Background removal options container */
+#backgroundRemovalOptions {
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 16px;
+}
+
+/* Custom selection tools styling */
+#customSelectionTools {
+    background: rgba(249, 250, 251, 0.8);
+    border: 1px dashed #d1d5db;
+    border-radius: 8px;
+    padding: 12px;
+}
+
+/* Processed image container improvements */
+#processedImageContainer .relative {
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+/* Retry and adjust buttons */
+#retryRemovalBtn, #adjustBtn {
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.025em;
+}
+
+/* Toast notification animations */
+.toast-enter {
+    transform: translateX(100%);
+    opacity: 0;
+}
+
+.toast-enter-active {
+    transform: translateX(0);
+    opacity: 1;
+    transition: all 0.3s ease;
+}
+
+.toast-exit {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.toast-exit-active {
+    transform: translateX(100%);
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+/* Mobile responsiveness for selection tools */
+@media (max-width: 640px) {
+    .selection-tools {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .selection-tools button {
+        width: 100%;
+        min-width: auto;
+    }
+    
+    #customSelectionTools {
+        padding: 8px;
+    }
+}
+
+/* Enhanced canvas positioning */
+.canvas-container {
+    position: relative;
+    display: inline-block;
+}
+
+.canvas-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+}
+
+.canvas-overlay.interactive {
+    pointer-events: auto;
+}

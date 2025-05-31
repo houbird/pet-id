@@ -55,13 +55,131 @@
                     <div class="w-full bg-gray-200 rounded-full h-2">
                         <div id="progressBar" class="bg-indigo-600 h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
                     </div>
-                </div>
-
-                <!-- Processed Image Preview -->
+                </div>                <!-- Background Removal Options -->
+                <div id="backgroundRemovalOptions" class="mt-4 hidden">
+                    <h3 class="text-lg font-medium text-gray-700 mb-2">去背方式選擇</h3>
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">選擇去背演算法</label>
+                        <select id="algorithmSelect" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                            <option value="corner">角落色彩去背</option>
+                            <option value="edge">邊緣偵測去背</option>
+                            <option value="chroma">色彩範圍去背</option>
+                            <option value="smart">智慧型去背</option>
+                            <option value="custom">自訂選取範圍</option>
+                        </select>
+                    </div>                      <!-- Custom Selection Tools -->
+                    <div id="customSelectionTools" class="mb-4 hidden">
+                        <!-- Selection Tools Toolbar -->
+                        <div class="bg-gray-50 p-3 rounded-lg mb-3">
+                            <div class="text-sm font-medium text-gray-700 mb-2">選取工具</div>
+                            <div class="grid grid-cols-2 gap-2 mb-3">
+                                <button id="rectangleSelectBtn" class="tool-btn px-3 py-2 bg-white border border-gray-300 rounded text-sm hover:bg-blue-50 hover:border-blue-300 active">
+                                    <i class="fas fa-square mr-1"></i>矩形選取
+                                </button>
+                                <button id="ellipseSelectBtn" class="tool-btn px-3 py-2 bg-white border border-gray-300 rounded text-sm hover:bg-blue-50 hover:border-blue-300">
+                                    <i class="fas fa-circle mr-1"></i>橢圓選取
+                                </button>
+                                <button id="lassoSelectBtn" class="tool-btn px-3 py-2 bg-white border border-gray-300 rounded text-sm hover:bg-blue-50 hover:border-blue-300">
+                                    <i class="fas fa-draw-polygon mr-1"></i>套索工具
+                                </button>
+                                <button id="magicWandBtn" class="tool-btn px-3 py-2 bg-white border border-gray-300 rounded text-sm hover:bg-blue-50 hover:border-blue-300">
+                                    <i class="fas fa-magic mr-1"></i>魔術棒
+                                </button>
+                                <button id="brushSelectBtn" class="tool-btn px-3 py-2 bg-white border border-gray-300 rounded text-sm hover:bg-blue-50 hover:border-blue-300">
+                                    <i class="fas fa-paintbrush mr-1"></i>筆刷選取
+                                </button>
+                                <button id="eraserSelectBtn" class="tool-btn px-3 py-2 bg-white border border-gray-300 rounded text-sm hover:bg-red-50 hover:border-red-300">
+                                    <i class="fas fa-eraser mr-1"></i>擦除
+                                </button>
+                            </div>
+                            
+                            <!-- Selection Operations -->
+                            <div class="text-sm font-medium text-gray-700 mb-2">選取操作</div>
+                            <div class="flex gap-2 mb-3">
+                                <button id="addToSelectionBtn" class="operation-btn px-2 py-1 bg-green-100 text-green-700 border border-green-300 rounded text-xs hover:bg-green-200 active" title="加入選取範圍">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                                <button id="subtractFromSelectionBtn" class="operation-btn px-2 py-1 bg-red-100 text-red-700 border border-red-300 rounded text-xs hover:bg-red-200" title="從選取範圍減去">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <button id="intersectSelectionBtn" class="operation-btn px-2 py-1 bg-blue-100 text-blue-700 border border-blue-300 rounded text-xs hover:bg-blue-200" title="與選取範圍相交">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                                <button id="replaceSelectionBtn" class="operation-btn px-2 py-1 bg-purple-100 text-purple-700 border border-purple-300 rounded text-xs hover:bg-purple-200" title="取代選取範圍">
+                                    <i class="fas fa-sync"></i>
+                                </button>
+                            </div>
+                            
+                            <!-- Tool Options -->
+                            <div id="toolOptions" class="border-t pt-2">
+                                <!-- Brush/Eraser Size -->
+                                <div id="brushOptions" class="hidden">
+                                    <label class="block text-xs text-gray-600 mb-1">筆刷大小: <span id="brushSizeValue">10</span>px</label>
+                                    <input type="range" id="brushSizeSlider" min="1" max="50" value="10" class="w-full h-2 bg-gray-200 rounded-lg slider">
+                                </div>
+                                
+                                <!-- Magic Wand Options -->
+                                <div id="magicWandOptions" class="hidden">
+                                    <label class="block text-xs text-gray-600 mb-1">色彩容差: <span id="toleranceValue">20</span></label>
+                                    <input type="range" id="toleranceSlider" min="0" max="100" value="20" class="w-full h-2 bg-gray-200 rounded-lg slider">
+                                </div>
+                                
+                                <!-- Feather Options -->
+                                <div id="featherOptions">
+                                    <label class="block text-xs text-gray-600 mb-1">羽化: <span id="featherValue">0</span>px</label>
+                                    <input type="range" id="featherSlider" min="0" max="20" value="0" class="w-full h-2 bg-gray-200 rounded-lg slider">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Selection Commands -->
+                        <div class="flex gap-2 mb-2">
+                            <button id="selectAllBtn" class="px-3 py-1 bg-gray-500 text-white rounded text-sm hover:bg-gray-600">
+                                <i class="fas fa-expand mr-1"></i>全選
+                            </button>
+                            <button id="deselectAllBtn" class="px-3 py-1 bg-gray-500 text-white rounded text-sm hover:bg-gray-600">
+                                <i class="fas fa-times mr-1"></i>取消選取
+                            </button>
+                            <button id="invertSelectionBtn" class="px-3 py-1 bg-gray-500 text-white rounded text-sm hover:bg-gray-600">
+                                <i class="fas fa-exchange-alt mr-1"></i>反轉選取
+                            </button>
+                        </div>
+                        
+                        <!-- Advanced Selection Options -->
+                        <div class="flex gap-2 mb-2">
+                            <button id="expandSelectionBtn" class="px-2 py-1 bg-blue-500 text-white rounded text-xs hover:bg-blue-600">
+                                <i class="fas fa-expand-arrows-alt mr-1"></i>擴展
+                            </button>
+                            <button id="contractSelectionBtn" class="px-2 py-1 bg-blue-500 text-white rounded text-xs hover:bg-blue-600">
+                                <i class="fas fa-compress-arrows-alt mr-1"></i>收縮
+                            </button>
+                            <button id="smoothSelectionBtn" class="px-2 py-1 bg-blue-500 text-white rounded text-xs hover:bg-blue-600">
+                                <i class="fas fa-wave-square mr-1"></i>平滑
+                            </button>
+                        </div>
+                        
+                        <div class="text-xs text-gray-600 mb-2">
+                            選擇工具後在圖片上操作，使用操作按鈕來加入、減去或修改選取範圍
+                        </div>
+                    </div>
+                    
+                    <button id="applyRemovalBtn" class="w-full bg-purple-600 text-white py-2 px-4 rounded-md hover:bg-purple-700 transition-colors">
+                        <i class="fas fa-magic mr-2"></i>套用去背
+                    </button>
+                </div>                <!-- Processed Image Preview -->
                 <div id="processedImageContainer" class="mt-4 hidden">
                     <h3 class="text-lg font-medium text-gray-700 mb-2">去背後照片</h3>
-                    <div class="border rounded-lg overflow-hidden bg-gray-100">
+                    <div class="canvas-container border rounded-lg overflow-hidden bg-gray-100 relative">
                         <canvas id="processedCanvas" class="w-full h-64"></canvas>
+                        <canvas id="selectionCanvas" class="canvas-overlay w-full h-64 hidden interactive"></canvas>
+                    </div>
+                    <div class="mt-2 flex gap-2">
+                        <button id="retryRemovalBtn" class="flex-1 bg-yellow-600 text-white py-2 px-4 rounded-md hover:bg-yellow-700 transition-colors text-sm">
+                            <i class="fas fa-redo mr-1"></i>重新去背
+                        </button>
+                        <button id="adjustBtn" class="flex-1 bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 transition-colors text-sm">
+                            <i class="fas fa-sliders-h mr-1"></i>微調
+                        </button>
                     </div>
                 </div>
 
