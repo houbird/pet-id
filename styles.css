@@ -231,3 +231,167 @@ button:hover {
 .canvas-overlay.interactive {
     pointer-events: auto;
 }
+
+/* Enhanced Selection Tools Styling */
+.tool-btn.active {
+    background-color: #3b82f6 !important;
+    color: white !important;
+    border-color: #2563eb !important;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+    transform: scale(1.05);
+}
+
+.operation-btn.active {
+    box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.2);
+    transform: scale(1.05);
+    background-color: #059669 !important;
+    color: white !important;
+}
+
+/* Advanced Canvas Cursor Modes */
+.rectangle-mode {
+    cursor: crosshair;
+}
+
+.ellipse-mode {
+    cursor: crosshair;
+}
+
+.lasso-mode {
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><path d="M2 2 L18 2 L18 18 L2 18 Z" fill="none" stroke="blue" stroke-width="1" stroke-dasharray="2,2"/></svg>') 10 10, auto;
+}
+
+.magic-wand-mode {
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><circle cx="10" cy="10" r="3" fill="gold"/><path d="M10 2 L10 7 M10 13 L10 18 M2 10 L7 10 M13 10 L18 10" stroke="gold" stroke-width="1.5"/></svg>') 10 10, auto;
+}
+
+.brush-mode {
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><circle cx="10" cy="10" r="5" fill="none" stroke="green" stroke-width="2"/></svg>') 10 10, auto;
+}
+
+.eraser-mode {
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><circle cx="10" cy="10" r="8" fill="none" stroke="red" stroke-width="2"/><line x1="6" y1="6" x2="14" y2="14" stroke="red" stroke-width="2"/></svg>') 10 10, auto;
+}
+
+/* Selection Marching Ants Animation */
+@keyframes marching-ants {
+    0% { stroke-dashoffset: 0; }
+    100% { stroke-dashoffset: 8; }
+}
+
+.selection-outline {
+    stroke: #000;
+    stroke-width: 1;
+    stroke-dasharray: 4 4;
+    animation: marching-ants 0.5s linear infinite;
+    fill: none;
+    pointer-events: none;
+}
+
+.selection-preview {
+    fill: rgba(0, 123, 255, 0.1);
+    stroke: rgba(0, 123, 255, 0.8);
+    stroke-width: 2;
+    stroke-dasharray: 4 4;
+    animation: marching-ants 0.8s linear infinite;
+    pointer-events: none;
+}
+
+/* Enhanced Slider Styling */
+.slider {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 4px;
+    border-radius: 2px;
+    background: #d1d5db;
+    outline: none;
+    transition: background 0.3s ease;
+}
+
+.slider:hover {
+    background: #9ca3af;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #3b82f6;
+    cursor: pointer;
+    border: 2px solid white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    transition: all 0.2s ease;
+}
+
+.slider::-webkit-slider-thumb:hover {
+    background: #2563eb;
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+.slider::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #3b82f6;
+    cursor: pointer;
+    border: 2px solid white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* Tool Options Animation */
+.tool-options-enter {
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.2s ease-in-out;
+}
+
+.tool-options-enter-active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Selection Tools Container */
+#customSelectionTools .bg-gray-50 {
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    border: 1px solid #e2e8f0;
+}
+
+/* Mobile Responsiveness for Selection Tools */
+@media (max-width: 640px) {
+    #customSelectionTools .grid-cols-2 {
+        grid-template-columns: 1fr;
+    }
+    
+    .tool-btn, .operation-btn {
+        width: 100%;
+        text-align: center;
+    }
+    
+    #toolOptions {
+        margin-top: 12px;
+    }
+}
+
+/* Brush Size Indicator */
+.brush-size-indicator {
+    position: fixed;
+    border: 2px solid #3b82f6;
+    border-radius: 50%;
+    background: rgba(59, 130, 246, 0.1);
+    pointer-events: none;
+    z-index: 1000;
+    transition: all 0.1s ease;
+}
+
+/* Selection Stats */
+.selection-stats {
+    font-size: 11px;
+    color: #6b7280;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 4px 8px;
+    border-radius: 4px;
+    backdrop-filter: blur(4px);
+}
