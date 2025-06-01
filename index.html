@@ -1,245 +1,245 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
-<head>    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="動物身分證生成器 - 上傳寵物照片，自動去背並生成仿臺灣國民身分證格式的動物身分證">
-    <meta name="keywords" content="寵物, 身分證, 貓咪, 動物, 去背, 照片處理">
-    <meta name="author" content="Pet ID Generator">
-    <meta property="og:title" content="動物身分證生成器">
-    <meta property="og:description" content="為您的寵物製作專屬身分證，支援自動去背功能">
-    <meta property="og:type" content="website">
-    <title>動物身分證生成器</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="styles.css" rel="stylesheet">
+<head>  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="動物身分證生成器 - 上傳寵物照片，自動去背並生成仿臺灣國民身分證格式的動物身分證">
+  <meta name="keywords" content="寵物, 身分證, 貓咪, 動物, 去背, 照片處理">
+  <meta name="author" content="Pet ID Generator">
+  <meta property="og:title" content="動物身分證生成器">
+  <meta property="og:description" content="為您的寵物製作專屬身分證，支援自動去背功能">
+  <meta property="og:type" content="website">
+  <title>動物身分證生成器</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="css/styles.css" rel="stylesheet">
 </head>
 <body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
-    <div class="container mx-auto px-4 py-8">
-        <!-- Header -->
-        <header class="text-center mb-8">
-            <h1 class="text-4xl font-bold text-indigo-800 mb-2">
-                <i class="fas fa-paw mr-3"></i>動物身分證生成器
-            </h1>
-            <p class="text-gray-600">上傳您的貓咪照片，生成專屬的動物身分證</p>
-        </header>
+  <div class="container mx-auto px-4 py-8">
+    <!-- Header -->
+    <header class="text-center mb-8">
+      <h1 class="text-4xl font-bold text-indigo-800 mb-2">
+        <i class="fas fa-paw mr-3"></i>動物身分證生成器
+      </h1>
+      <p class="text-gray-600">上傳您的貓咪照片，生成專屬的動物身分證</p>
+    </header>
 
-        <div class="grid lg:grid-cols-2 gap-8">
-            <!-- Upload Section -->
-            <div class="bg-white rounded-xl shadow-lg p-6">
-                <h2 class="text-2xl font-semibold text-gray-800 mb-4">
-                    <i class="fas fa-upload mr-2 text-indigo-600"></i>上傳照片
-                </h2>
-                
-                <!-- File Upload Area -->
-                <div id="uploadArea" class="border-2 border-dashed border-indigo-300 rounded-lg p-8 text-center hover:border-indigo-500 transition-colors cursor-pointer">
-                    <i class="fas fa-cloud-upload-alt text-4xl text-indigo-400 mb-4"></i>
-                    <p class="text-gray-600 mb-2">點擊或拖拉上傳貓咪照片</p>
-                    <p class="text-sm text-gray-500">支援 JPG, PNG 格式</p>
-                    <input type="file" id="imageInput" accept="image/jpeg,image/png" class="hidden">
-                </div>
-
-                <!-- Original Image Preview -->
-                <div id="originalImageContainer" class="mt-4 hidden">
-                    <h3 class="text-lg font-medium text-gray-700 mb-2">原始照片</h3>
-                    <div class="border rounded-lg overflow-hidden">
-                        <img id="originalImage" class="w-full h-64 object-cover">
-                    </div>
-                </div>
-
-                <!-- Progress Bar -->
-                <div id="progressContainer" class="mt-4 hidden">
-                    <div class="flex items-center justify-between mb-2">
-                        <span class="text-sm text-gray-600">處理中...</span>
-                        <span id="progressText" class="text-sm text-indigo-600">0%</span>
-                    </div>
-                    <div class="w-full bg-gray-200 rounded-full h-2">
-                        <div id="progressBar" class="bg-indigo-600 h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
-                    </div>
-                </div>                <!-- Background Removal Options -->
-                <div id="backgroundRemovalOptions" class="mt-4 hidden">
-                    <h3 class="text-lg font-medium text-gray-700 mb-2">去背方式選擇</h3>
-                    <div class="mb-4">
-                        <label class="block text-sm font-medium text-gray-700 mb-1">選擇去背演算法</label>
-                        <select id="algorithmSelect" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                            <option value="corner">角落色彩去背</option>
-                            <option value="edge">邊緣偵測去背</option>
-                            <option value="chroma">色彩範圍去背</option>
-                            <option value="smart">智慧型去背</option>
-                            <option value="custom">自訂選取範圍</option>
-                        </select>
-                    </div>                      <!-- Custom Selection Tools -->
-                    <div id="customSelectionTools" class="mb-4 hidden">
-                        <!-- Selection Tools Toolbar -->
-                        <div class="bg-gray-50 p-3 rounded-lg mb-3">
-                            <div class="text-sm font-medium text-gray-700 mb-2">選取工具</div>
-                            <div class="grid grid-cols-2 gap-2 mb-3">
-                                <button id="rectangleSelectBtn" class="tool-btn px-3 py-2 bg-white border border-gray-300 rounded text-sm hover:bg-blue-50 hover:border-blue-300 active">
-                                    <i class="fas fa-square mr-1"></i>矩形選取
-                                </button>
-                                <button id="ellipseSelectBtn" class="tool-btn px-3 py-2 bg-white border border-gray-300 rounded text-sm hover:bg-blue-50 hover:border-blue-300">
-                                    <i class="fas fa-circle mr-1"></i>橢圓選取
-                                </button>
-                                <button id="lassoSelectBtn" class="tool-btn px-3 py-2 bg-white border border-gray-300 rounded text-sm hover:bg-blue-50 hover:border-blue-300">
-                                    <i class="fas fa-draw-polygon mr-1"></i>套索工具
-                                </button>
-                                <button id="magicWandBtn" class="tool-btn px-3 py-2 bg-white border border-gray-300 rounded text-sm hover:bg-blue-50 hover:border-blue-300">
-                                    <i class="fas fa-magic mr-1"></i>魔術棒
-                                </button>
-                                <button id="brushSelectBtn" class="tool-btn px-3 py-2 bg-white border border-gray-300 rounded text-sm hover:bg-blue-50 hover:border-blue-300">
-                                    <i class="fas fa-paintbrush mr-1"></i>筆刷選取
-                                </button>
-                                <button id="eraserSelectBtn" class="tool-btn px-3 py-2 bg-white border border-gray-300 rounded text-sm hover:bg-red-50 hover:border-red-300">
-                                    <i class="fas fa-eraser mr-1"></i>擦除
-                                </button>
-                            </div>
-                            
-                            <!-- Selection Operations -->
-                            <div class="text-sm font-medium text-gray-700 mb-2">選取操作</div>
-                            <div class="flex gap-2 mb-3">
-                                <button id="addToSelectionBtn" class="operation-btn px-2 py-1 bg-green-100 text-green-700 border border-green-300 rounded text-xs hover:bg-green-200 active" title="加入選取範圍">
-                                    <i class="fas fa-plus"></i>
-                                </button>
-                                <button id="subtractFromSelectionBtn" class="operation-btn px-2 py-1 bg-red-100 text-red-700 border border-red-300 rounded text-xs hover:bg-red-200" title="從選取範圍減去">
-                                    <i class="fas fa-minus"></i>
-                                </button>
-                                <button id="intersectSelectionBtn" class="operation-btn px-2 py-1 bg-blue-100 text-blue-700 border border-blue-300 rounded text-xs hover:bg-blue-200" title="與選取範圍相交">
-                                    <i class="fas fa-times"></i>
-                                </button>
-                                <button id="replaceSelectionBtn" class="operation-btn px-2 py-1 bg-purple-100 text-purple-700 border border-purple-300 rounded text-xs hover:bg-purple-200" title="取代選取範圍">
-                                    <i class="fas fa-sync"></i>
-                                </button>
-                            </div>
-                            
-                            <!-- Tool Options -->
-                            <div id="toolOptions" class="border-t pt-2">
-                                <!-- Brush/Eraser Size -->
-                                <div id="brushOptions" class="hidden">
-                                    <label class="block text-xs text-gray-600 mb-1">筆刷大小: <span id="brushSizeValue">10</span>px</label>
-                                    <input type="range" id="brushSizeSlider" min="1" max="50" value="10" class="w-full h-2 bg-gray-200 rounded-lg slider">
-                                </div>
-                                
-                                <!-- Magic Wand Options -->
-                                <div id="magicWandOptions" class="hidden">
-                                    <label class="block text-xs text-gray-600 mb-1">色彩容差: <span id="toleranceValue">20</span></label>
-                                    <input type="range" id="toleranceSlider" min="0" max="100" value="20" class="w-full h-2 bg-gray-200 rounded-lg slider">
-                                </div>
-                                
-                                <!-- Feather Options -->
-                                <div id="featherOptions">
-                                    <label class="block text-xs text-gray-600 mb-1">羽化: <span id="featherValue">0</span>px</label>
-                                    <input type="range" id="featherSlider" min="0" max="20" value="0" class="w-full h-2 bg-gray-200 rounded-lg slider">
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Selection Commands -->
-                        <div class="flex gap-2 mb-2">
-                            <button id="selectAllBtn" class="px-3 py-1 bg-gray-500 text-white rounded text-sm hover:bg-gray-600">
-                                <i class="fas fa-expand mr-1"></i>全選
-                            </button>
-                            <button id="deselectAllBtn" class="px-3 py-1 bg-gray-500 text-white rounded text-sm hover:bg-gray-600">
-                                <i class="fas fa-times mr-1"></i>取消選取
-                            </button>
-                            <button id="invertSelectionBtn" class="px-3 py-1 bg-gray-500 text-white rounded text-sm hover:bg-gray-600">
-                                <i class="fas fa-exchange-alt mr-1"></i>反轉選取
-                            </button>
-                        </div>
-                        
-                        <!-- Advanced Selection Options -->
-                        <div class="flex gap-2 mb-2">
-                            <button id="expandSelectionBtn" class="px-2 py-1 bg-blue-500 text-white rounded text-xs hover:bg-blue-600">
-                                <i class="fas fa-expand-arrows-alt mr-1"></i>擴展
-                            </button>
-                            <button id="contractSelectionBtn" class="px-2 py-1 bg-blue-500 text-white rounded text-xs hover:bg-blue-600">
-                                <i class="fas fa-compress-arrows-alt mr-1"></i>收縮
-                            </button>
-                            <button id="smoothSelectionBtn" class="px-2 py-1 bg-blue-500 text-white rounded text-xs hover:bg-blue-600">
-                                <i class="fas fa-wave-square mr-1"></i>平滑
-                            </button>
-                        </div>
-                        
-                        <div class="text-xs text-gray-600 mb-2">
-                            選擇工具後在圖片上操作，使用操作按鈕來加入、減去或修改選取範圍
-                        </div>
-                    </div>
-                    
-                    <button id="applyRemovalBtn" class="w-full bg-purple-600 text-white py-2 px-4 rounded-md hover:bg-purple-700 transition-colors">
-                        <i class="fas fa-magic mr-2"></i>套用去背
-                    </button>
-                </div>                <!-- Processed Image Preview -->
-                <div id="processedImageContainer" class="mt-4 hidden">
-                    <h3 class="text-lg font-medium text-gray-700 mb-2">去背後照片</h3>
-                    <div class="canvas-container border rounded-lg overflow-hidden bg-gray-100 relative">
-                        <canvas id="processedCanvas" class="w-full h-64"></canvas>
-                        <canvas id="selectionCanvas" class="canvas-overlay w-full h-64 hidden interactive"></canvas>
-                    </div>
-                    <div class="mt-2 flex gap-2">
-                        <button id="retryRemovalBtn" class="flex-1 bg-yellow-600 text-white py-2 px-4 rounded-md hover:bg-yellow-700 transition-colors text-sm">
-                            <i class="fas fa-redo mr-1"></i>重新去背
-                        </button>
-                        <button id="adjustBtn" class="flex-1 bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 transition-colors text-sm">
-                            <i class="fas fa-sliders-h mr-1"></i>微調
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Pet Information Form -->
-                <div id="petInfoForm" class="mt-6 hidden">
-                    <h3 class="text-lg font-medium text-gray-700 mb-4">寵物資料</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">姓名</label>
-                            <input type="text" id="petName" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="請輸入寵物名字">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">性別</label>
-                            <select id="petGender" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                                <option value="公">公</option>
-                                <option value="母">母</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">生日</label>
-                            <input type="date" id="petBirthday" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">品種</label>
-                            <input type="text" id="petBreed" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="例：波斯貓">
-                        </div>
-                        <div class="md:col-span-2">
-                            <label class="block text-sm font-medium text-gray-700 mb-1">地址</label>
-                            <input type="text" id="petAddress" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="請輸入地址">
-                        </div>
-                    </div>
-                    <button id="generateIdBtn" class="w-full mt-4 bg-indigo-600 text-white py-3 px-4 rounded-md hover:bg-indigo-700 transition-colors font-medium">
-                        <i class="fas fa-id-card mr-2"></i>生成身分證
-                    </button>
-                </div>
-            </div>
-
-            <!-- ID Card Display Section -->
-            <div class="bg-white rounded-xl shadow-lg p-6">
-                <h2 class="text-2xl font-semibold text-gray-800 mb-4">
-                    <i class="fas fa-id-card mr-2 text-indigo-600"></i>動物身分證
-                </h2>
-                
-                <div id="idCardContainer" class="hidden">
-                    <div class="border rounded-lg overflow-hidden mb-4">
-                        <canvas id="idCardCanvas" class="w-full"></canvas>
-                    </div>
-                    <button id="downloadBtn" class="w-full bg-green-600 text-white py-3 px-4 rounded-md hover:bg-green-700 transition-colors font-medium">
-                        <i class="fas fa-download mr-2"></i>下載身分證
-                    </button>
-                </div>
-
-                <div id="idCardPlaceholder" class="text-center py-16 text-gray-400">
-                    <i class="fas fa-id-card text-6xl mb-4"></i>
-                    <p>上傳照片並填寫資料後，身分證將會在這裡顯示</p>
-                </div>
-            </div>
+    <div class="grid lg:grid-cols-2 gap-8">
+      <!-- Upload Section -->
+      <div class="bg-white rounded-xl shadow-lg p-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">
+          <i class="fas fa-upload mr-2 text-indigo-600"></i>上傳照片
+        </h2>
+        
+        <!-- File Upload Area -->
+        <div id="uploadArea" class="border-2 border-dashed border-indigo-300 rounded-lg p-8 text-center hover:border-indigo-500 transition-colors cursor-pointer">
+          <i class="fas fa-cloud-upload-alt text-4xl text-indigo-400 mb-4"></i>
+          <p class="text-gray-600 mb-2">點擊或拖拉上傳貓咪照片</p>
+          <p class="text-sm text-gray-500">支援 JPG, PNG 格式</p>
+          <input type="file" id="imageInput" accept="image/jpeg,image/png" class="hidden">
         </div>
-    </div>
 
-    <script src="script.js"></script>
+        <!-- Original Image Preview -->
+        <div id="originalImageContainer" class="mt-4 hidden">
+          <h3 class="text-lg font-medium text-gray-700 mb-2">原始照片</h3>
+          <div class="border rounded-lg overflow-hidden">
+            <img id="originalImage" class="w-full h-64 object-cover">
+          </div>
+        </div>
+
+        <!-- Progress Bar -->
+        <div id="progressContainer" class="mt-4 hidden">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-sm text-gray-600">處理中...</span>
+            <span id="progressText" class="text-sm text-indigo-600">0%</span>
+          </div>
+          <div class="w-full bg-gray-200 rounded-full h-2">
+            <div id="progressBar" class="bg-indigo-600 h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
+          </div>
+        </div>        <!-- Background Removal Options -->
+        <div id="backgroundRemovalOptions" class="mt-4 hidden">
+          <h3 class="text-lg font-medium text-gray-700 mb-2">去背方式選擇</h3>
+          <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700 mb-1">選擇去背演算法</label>
+            <select id="algorithmSelect" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
+              <option value="corner">角落色彩去背</option>
+              <option value="edge">邊緣偵測去背</option>
+              <option value="chroma">色彩範圍去背</option>
+              <option value="smart">智慧型去背</option>
+              <option value="custom">自訂選取範圍</option>
+            </select>
+          </div>            <!-- Custom Selection Tools -->
+          <div id="customSelectionTools" class="mb-4 hidden">
+            <!-- Selection Tools Toolbar -->
+            <div class="bg-gray-50 p-3 rounded-lg mb-3">
+              <div class="text-sm font-medium text-gray-700 mb-2">選取工具</div>
+              <div class="grid grid-cols-2 gap-2 mb-3">
+                <button id="rectangleSelectBtn" class="tool-btn px-3 py-2 bg-white border border-gray-300 rounded text-sm hover:bg-blue-50 hover:border-blue-300 active">
+                  <i class="fas fa-square mr-1"></i>矩形選取
+                </button>
+                <button id="ellipseSelectBtn" class="tool-btn px-3 py-2 bg-white border border-gray-300 rounded text-sm hover:bg-blue-50 hover:border-blue-300">
+                  <i class="fas fa-circle mr-1"></i>橢圓選取
+                </button>
+                <button id="lassoSelectBtn" class="tool-btn px-3 py-2 bg-white border border-gray-300 rounded text-sm hover:bg-blue-50 hover:border-blue-300">
+                  <i class="fas fa-draw-polygon mr-1"></i>套索工具
+                </button>
+                <button id="magicWandBtn" class="tool-btn px-3 py-2 bg-white border border-gray-300 rounded text-sm hover:bg-blue-50 hover:border-blue-300">
+                  <i class="fas fa-magic mr-1"></i>魔術棒
+                </button>
+                <button id="brushSelectBtn" class="tool-btn px-3 py-2 bg-white border border-gray-300 rounded text-sm hover:bg-blue-50 hover:border-blue-300">
+                  <i class="fas fa-paintbrush mr-1"></i>筆刷選取
+                </button>
+                <button id="eraserSelectBtn" class="tool-btn px-3 py-2 bg-white border border-gray-300 rounded text-sm hover:bg-red-50 hover:border-red-300">
+                  <i class="fas fa-eraser mr-1"></i>擦除
+                </button>
+              </div>
+              
+              <!-- Selection Operations -->
+              <div class="text-sm font-medium text-gray-700 mb-2">選取操作</div>
+              <div class="flex gap-2 mb-3">
+                <button id="addToSelectionBtn" class="operation-btn px-2 py-1 bg-green-100 text-green-700 border border-green-300 rounded text-xs hover:bg-green-200 active" title="加入選取範圍">
+                  <i class="fas fa-plus"></i>
+                </button>
+                <button id="subtractFromSelectionBtn" class="operation-btn px-2 py-1 bg-red-100 text-red-700 border border-red-300 rounded text-xs hover:bg-red-200" title="從選取範圍減去">
+                  <i class="fas fa-minus"></i>
+                </button>
+                <button id="intersectSelectionBtn" class="operation-btn px-2 py-1 bg-blue-100 text-blue-700 border border-blue-300 rounded text-xs hover:bg-blue-200" title="與選取範圍相交">
+                  <i class="fas fa-times"></i>
+                </button>
+                <button id="replaceSelectionBtn" class="operation-btn px-2 py-1 bg-purple-100 text-purple-700 border border-purple-300 rounded text-xs hover:bg-purple-200" title="取代選取範圍">
+                  <i class="fas fa-sync"></i>
+                </button>
+              </div>
+              
+              <!-- Tool Options -->
+              <div id="toolOptions" class="border-t pt-2">
+                <!-- Brush/Eraser Size -->
+                <div id="brushOptions" class="hidden">
+                  <label class="block text-xs text-gray-600 mb-1">筆刷大小: <span id="brushSizeValue">10</span>px</label>
+                  <input type="range" id="brushSizeSlider" min="1" max="50" value="10" class="w-full h-2 bg-gray-200 rounded-lg slider">
+                </div>
+                
+                <!-- Magic Wand Options -->
+                <div id="magicWandOptions" class="hidden">
+                  <label class="block text-xs text-gray-600 mb-1">色彩容差: <span id="toleranceValue">20</span></label>
+                  <input type="range" id="toleranceSlider" min="0" max="100" value="20" class="w-full h-2 bg-gray-200 rounded-lg slider">
+                </div>
+                
+                <!-- Feather Options -->
+                <div id="featherOptions">
+                  <label class="block text-xs text-gray-600 mb-1">羽化: <span id="featherValue">0</span>px</label>
+                  <input type="range" id="featherSlider" min="0" max="20" value="0" class="w-full h-2 bg-gray-200 rounded-lg slider">
+                </div>
+              </div>
+            </div>
+            
+            <!-- Selection Commands -->
+            <div class="flex gap-2 mb-2">
+              <button id="selectAllBtn" class="px-3 py-1 bg-gray-500 text-white rounded text-sm hover:bg-gray-600">
+                <i class="fas fa-expand mr-1"></i>全選
+              </button>
+              <button id="deselectAllBtn" class="px-3 py-1 bg-gray-500 text-white rounded text-sm hover:bg-gray-600">
+                <i class="fas fa-times mr-1"></i>取消選取
+              </button>
+              <button id="invertSelectionBtn" class="px-3 py-1 bg-gray-500 text-white rounded text-sm hover:bg-gray-600">
+                <i class="fas fa-exchange-alt mr-1"></i>反轉選取
+              </button>
+            </div>
+            
+            <!-- Advanced Selection Options -->
+            <div class="flex gap-2 mb-2">
+              <button id="expandSelectionBtn" class="px-2 py-1 bg-blue-500 text-white rounded text-xs hover:bg-blue-600">
+                <i class="fas fa-expand-arrows-alt mr-1"></i>擴展
+              </button>
+              <button id="contractSelectionBtn" class="px-2 py-1 bg-blue-500 text-white rounded text-xs hover:bg-blue-600">
+                <i class="fas fa-compress-arrows-alt mr-1"></i>收縮
+              </button>
+              <button id="smoothSelectionBtn" class="px-2 py-1 bg-blue-500 text-white rounded text-xs hover:bg-blue-600">
+                <i class="fas fa-wave-square mr-1"></i>平滑
+              </button>
+            </div>
+            
+            <div class="text-xs text-gray-600 mb-2">
+              選擇工具後在圖片上操作，使用操作按鈕來加入、減去或修改選取範圍
+            </div>
+          </div>
+          
+          <button id="applyRemovalBtn" class="w-full bg-purple-600 text-white py-2 px-4 rounded-md hover:bg-purple-700 transition-colors">
+            <i class="fas fa-magic mr-2"></i>套用去背
+          </button>
+        </div>        <!-- Processed Image Preview -->
+        <div id="processedImageContainer" class="mt-4 hidden">
+          <h3 class="text-lg font-medium text-gray-700 mb-2">去背後照片</h3>
+          <div class="canvas-container border rounded-lg overflow-hidden bg-gray-100 relative">
+            <canvas id="processedCanvas" class="w-full h-64"></canvas>
+            <canvas id="selectionCanvas" class="canvas-overlay w-full h-64 hidden interactive"></canvas>
+          </div>
+          <div class="mt-2 flex gap-2">
+            <button id="retryRemovalBtn" class="flex-1 bg-yellow-600 text-white py-2 px-4 rounded-md hover:bg-yellow-700 transition-colors text-sm">
+              <i class="fas fa-redo mr-1"></i>重新去背
+            </button>
+            <button id="adjustBtn" class="flex-1 bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 transition-colors text-sm">
+              <i class="fas fa-sliders-h mr-1"></i>微調
+            </button>
+          </div>
+        </div>
+
+        <!-- Pet Information Form -->
+        <div id="petInfoForm" class="mt-6 hidden">
+          <h3 class="text-lg font-medium text-gray-700 mb-4">寵物資料</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">姓名</label>
+              <input type="text" id="petName" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="請輸入寵物名字">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">性別</label>
+              <select id="petGender" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                <option value="公">公</option>
+                <option value="母">母</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">生日</label>
+              <input type="date" id="petBirthday" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">品種</label>
+              <input type="text" id="petBreed" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="例：波斯貓">
+            </div>
+            <div class="md:col-span-2">
+              <label class="block text-sm font-medium text-gray-700 mb-1">地址</label>
+              <input type="text" id="petAddress" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="請輸入地址">
+            </div>
+          </div>
+          <button id="generateIdBtn" class="w-full mt-4 bg-indigo-600 text-white py-3 px-4 rounded-md hover:bg-indigo-700 transition-colors font-medium">
+            <i class="fas fa-id-card mr-2"></i>生成身分證
+          </button>
+        </div>
+      </div>
+
+      <!-- ID Card Display Section -->
+      <div class="bg-white rounded-xl shadow-lg p-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">
+          <i class="fas fa-id-card mr-2 text-indigo-600"></i>動物身分證
+        </h2>
+        
+        <div id="idCardContainer" class="hidden">
+          <div class="border rounded-lg overflow-hidden mb-4">
+            <canvas id="idCardCanvas" class="w-full"></canvas>
+          </div>
+          <button id="downloadBtn" class="w-full bg-green-600 text-white py-3 px-4 rounded-md hover:bg-green-700 transition-colors font-medium">
+            <i class="fas fa-download mr-2"></i>下載身分證
+          </button>
+        </div>
+
+        <div id="idCardPlaceholder" class="text-center py-16 text-gray-400">
+          <i class="fas fa-id-card text-6xl mb-4"></i>
+          <p>上傳照片並填寫資料後，身分證將會在這裡顯示</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/script.js"></script>
 </body>
 </html>

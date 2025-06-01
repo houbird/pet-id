@@ -87,12 +87,12 @@ php -S localhost:8000
 
 ```
 pet-id/
-├── index.html          # 主要 HTML 檔案
-├── script.js           # JavaScript 功能實作
-├── README.md           # 專案說明文件
+├── index.html      # 主要 HTML 檔案
+├── script.js       # JavaScript 功能實作
+├── README.md       # 專案說明文件
 └── .github/
-    └── prompts/
-        └── pet-id.prompt.md  # 專案需求規格
+  └── prompts/
+    └── pet-id.prompt.md  # 專案需求規格
 ```
 
 ## 技術細節

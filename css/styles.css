@@ -1,0 +1,397 @@
+/* Custom styles for Pet ID Generator */
+
+/* Smooth transitions for all interactive elements */
+* {
+  transition: all 0.3s ease;
+}
+
+/* Upload area hover effects */
+#uploadArea:hover {
+  background-color: rgba(99, 102, 241, 0.05);
+}
+
+/* Custom scrollbar for better UX */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Canvas styling */
+canvas {
+  border-radius: 8px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+/* Form input focus animations */
+input:focus, select:focus {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.15);
+}
+
+/* Button hover animations */
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Loading animation for progress bar */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  h1 {
+    font-size: 2rem;
+  }
+  
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Print styles for ID card */
+@media print {
+  body {
+    background: white;
+  }
+  
+  .no-print {
+    display: none;
+  }
+  
+  #idCardCanvas {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .border-dashed {
+    border-width: 3px;
+  }
+  
+  button {
+    border: 2px solid currentColor;
+  }
+}
+
+/* Custom styles for background removal tools */
+#selectionCanvas {
+  cursor: crosshair;
+  pointer-events: auto !important;
+}
+
+#selectionCanvas.select-mode {
+  cursor: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><circle cx="10" cy="10" r="8" fill="none" stroke="green" stroke-width="2"/></svg>'), crosshair;
+}
+
+#selectionCanvas.erase-mode {
+  cursor: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><circle cx="10" cy="10" r="8" fill="none" stroke="red" stroke-width="2"/></svg>'), crosshair;
+}
+
+/* Algorithm selection styling */
+#algorithmSelect {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12"><path fill="%23374151" d="M6 9L1.5 4.5h9L6 9z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 12px;
+  padding-right: 40px;
+}
+
+/* Custom selection tool buttons */
+.selection-tools button {
+  min-width: 100px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.selection-tools button.active {
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+}
+
+/* Background removal options container */
+#backgroundRemovalOptions {
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+/* Custom selection tools styling */
+#customSelectionTools {
+  background: rgba(249, 250, 251, 0.8);
+  border: 1px dashed #d1d5db;
+  border-radius: 8px;
+  padding: 12px;
+}
+
+/* Processed image container improvements */
+#processedImageContainer .relative {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* Retry and adjust buttons */
+#retryRemovalBtn, #adjustBtn {
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.025em;
+}
+
+/* Toast notification animations */
+.toast-enter {
+  transform: translateX(100%);
+  opacity: 0;
+}
+
+.toast-enter-active {
+  transform: translateX(0);
+  opacity: 1;
+  transition: all 0.3s ease;
+}
+
+.toast-exit {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.toast-exit-active {
+  transform: translateX(100%);
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+/* Mobile responsiveness for selection tools */
+@media (max-width: 640px) {
+  .selection-tools {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .selection-tools button {
+    width: 100%;
+    min-width: auto;
+  }
+  
+  #customSelectionTools {
+    padding: 8px;
+  }
+}
+
+/* Enhanced canvas positioning */
+.canvas-container {
+  position: relative;
+  display: inline-block;
+}
+
+.canvas-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+.canvas-overlay.interactive {
+  pointer-events: auto;
+}
+
+/* Enhanced Selection Tools Styling */
+.tool-btn.active {
+  background-color: #3b82f6 !important;
+  color: white !important;
+  border-color: #2563eb !important;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+  transform: scale(1.05);
+}
+
+.operation-btn.active {
+  box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.2);
+  transform: scale(1.05);
+  background-color: #059669 !important;
+  color: white !important;
+}
+
+/* Advanced Canvas Cursor Modes */
+.rectangle-mode {
+  cursor: crosshair;
+}
+
+.ellipse-mode {
+  cursor: crosshair;
+}
+
+.lasso-mode {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><path d="M2 2 L18 2 L18 18 L2 18 Z" fill="none" stroke="blue" stroke-width="1" stroke-dasharray="2,2"/></svg>') 10 10, auto;
+}
+
+.magic-wand-mode {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><circle cx="10" cy="10" r="3" fill="gold"/><path d="M10 2 L10 7 M10 13 L10 18 M2 10 L7 10 M13 10 L18 10" stroke="gold" stroke-width="1.5"/></svg>') 10 10, auto;
+}
+
+.brush-mode {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><circle cx="10" cy="10" r="5" fill="none" stroke="green" stroke-width="2"/></svg>') 10 10, auto;
+}
+
+.eraser-mode {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><circle cx="10" cy="10" r="8" fill="none" stroke="red" stroke-width="2"/><line x1="6" y1="6" x2="14" y2="14" stroke="red" stroke-width="2"/></svg>') 10 10, auto;
+}
+
+/* Selection Marching Ants Animation */
+@keyframes marching-ants {
+  0% { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: 8; }
+}
+
+.selection-outline {
+  stroke: #000;
+  stroke-width: 1;
+  stroke-dasharray: 4 4;
+  animation: marching-ants 0.5s linear infinite;
+  fill: none;
+  pointer-events: none;
+}
+
+.selection-preview {
+  fill: rgba(0, 123, 255, 0.1);
+  stroke: rgba(0, 123, 255, 0.8);
+  stroke-width: 2;
+  stroke-dasharray: 4 4;
+  animation: marching-ants 0.8s linear infinite;
+  pointer-events: none;
+}
+
+/* Enhanced Slider Styling */
+.slider {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  border-radius: 2px;
+  background: #d1d5db;
+  outline: none;
+  transition: background 0.3s ease;
+}
+
+.slider:hover {
+  background: #9ca3af;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #3b82f6;
+  cursor: pointer;
+  border: 2px solid white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  transition: all 0.2s ease;
+}
+
+.slider::-webkit-slider-thumb:hover {
+  background: #2563eb;
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+.slider::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #3b82f6;
+  cursor: pointer;
+  border: 2px solid white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* Tool Options Animation */
+.tool-options-enter {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all 0.2s ease-in-out;
+}
+
+.tool-options-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Selection Tools Container */
+#customSelectionTools .bg-gray-50 {
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  border: 1px solid #e2e8f0;
+}
+
+/* Mobile Responsiveness for Selection Tools */
+@media (max-width: 640px) {
+  #customSelectionTools .grid-cols-2 {
+    grid-template-columns: 1fr;
+  }
+  
+  .tool-btn, .operation-btn {
+    width: 100%;
+    text-align: center;
+  }
+  
+  #toolOptions {
+    margin-top: 12px;
+  }
+}
+
+/* Brush Size Indicator */
+.brush-size-indicator {
+  position: fixed;
+  border: 2px solid #3b82f6;
+  border-radius: 50%;
+  background: rgba(59, 130, 246, 0.1);
+  pointer-events: none;
+  z-index: 1000;
+  transition: all 0.1s ease;
+}
+
+/* Selection Stats */
+.selection-stats {
+  font-size: 11px;
+  color: #6b7280;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 4px 8px;
+  border-radius: 4px;
+  backdrop-filter: blur(4px);
+}
