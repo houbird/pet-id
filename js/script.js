@@ -29,6 +29,7 @@ class PetIdGenerator {
     const algorithmSelect = document.getElementById('algorithmSelect');
     const applyRemovalBtn = document.getElementById('applyRemovalBtn');
     const retryRemovalBtn = document.getElementById('retryRemovalBtn');
+    const loadDefaultImageBtn = document.getElementById('loadDefaultImageBtn');
 
     // Debug: Log missing elements
     const elements = {uploadArea, imageInput, generateIdBtn, downloadBtn, algorithmSelect, applyRemovalBtn, retryRemovalBtn};
@@ -68,6 +69,11 @@ class PetIdGenerator {
 
     // Download button
     downloadBtn.addEventListener('click', this.downloadIdCard.bind(this));
+
+    // 預設照片按鈕事件
+    if (loadDefaultImageBtn) {
+      loadDefaultImageBtn.addEventListener('click', () => this.loadDefaultImage());
+    }
   }
 
   initializeSelectionTools() {
@@ -1649,9 +1655,28 @@ class PetIdGenerator {
     // Clear visual feedback
     this.updateSelectionPreview();
   }
+
+  // 載入預設照片
+  async loadDefaultImage() {
+    try {
+      const response = await fetch('images/dago_m.png');
+      const blob = await response.blob();
+      // 轉成 File 物件（模擬上傳）
+      const file = new File([blob], 'dago_m.png', { type: blob.type });
+      this.handleImageUpload(file);
+    } catch (err) {
+      this.showError('預設照片載入失敗');
+    }
+  }
+}
+
+function init() {
+  // 自動將 petBirthday 設為今天日期
+  petBirthday.value = new Date().toISOString().split('T')[0];
 }
 
 // Initialize the application when the page loads
 document.addEventListener('DOMContentLoaded', () => {
   new PetIdGenerator();
+  init();
 });

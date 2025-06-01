@@ -37,6 +37,10 @@
           <p class="text-sm text-gray-500">支援 JPG, PNG 格式</p>
           <input type="file" id="imageInput" accept="image/jpeg,image/png" class="hidden">
         </div>
+        
+        <button id="loadDefaultImageBtn" class="w-full mt-3 bg-gray-300 text-gray-800 py-2 px-4 rounded-md hover:bg-gray-400 transition-colors font-medium">
+          <i class="fas fa-image mr-2"></i>載入預設照片
+        </button>
 
         <!-- Original Image Preview -->
         <div id="originalImageContainer" class="mt-4 hidden">
@@ -189,7 +193,7 @@
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-1">姓名</label>
-              <input type="text" id="petName" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="請輸入寵物名字">
+              <input type="text" id="petName" value="大哥" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="請輸入寵物名字">
             </div>
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-1">性別</label>
@@ -200,15 +204,15 @@
             </div>
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-1">生日</label>
-              <input type="date" id="petBirthday" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
+              <input type="date" id="petBirthday" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" value="2025-06-01">
             </div>
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-1">品種</label>
-              <input type="text" id="petBreed" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="例：波斯貓">
+              <input type="text" id="petBreed" value="菜市場短毛貓" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="例：波斯貓">
             </div>
             <div class="md:col-span-2">
               <label class="block text-sm font-medium text-gray-700 mb-1">地址</label>
-              <input type="text" id="petAddress" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="請輸入地址">
+              <input type="text" id="petAddress" value="貓咪市罐頭區市場路 100 號" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="請輸入地址">
             </div>
           </div>
           <button id="generateIdBtn" class="w-full mt-4 bg-indigo-600 text-white py-3 px-4 rounded-md hover:bg-indigo-700 transition-colors font-medium">
