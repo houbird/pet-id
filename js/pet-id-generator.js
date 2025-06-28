@@ -33,9 +33,10 @@ class PetIdGenerator {
     const applyRemovalBtn = document.getElementById('applyRemovalBtn');
     const retryRemovalBtn = document.getElementById('retryRemovalBtn');
     const loadDefaultImageBtn = document.getElementById('loadDefaultImageBtn');
+    const generateDefaultIdBtn = document.getElementById('generateDefaultIdBtn');
 
     // Debug: Log missing elements
-    const elements = {uploadArea, imageInput, generateIdBtn, downloadBtn, algorithmSelect, applyRemovalBtn, retryRemovalBtn};
+    const elements = {uploadArea, imageInput, generateIdBtn, downloadBtn, algorithmSelect, applyRemovalBtn, retryRemovalBtn, generateDefaultIdBtn};
     for (const [name, el] of Object.entries(elements)) {
       if (!el) {
         console.error(`Element with id '${name}' is null`);
@@ -76,6 +77,26 @@ class PetIdGenerator {
     // 預設照片按鈕事件
     if (loadDefaultImageBtn) {
       loadDefaultImageBtn.addEventListener('click', () => ImageHandler.loadDefaultImage(this));
+    }
+    // 直接生成預設身分證按鈕事件
+    if (generateDefaultIdBtn) {
+      generateDefaultIdBtn.addEventListener('click', () => {
+        // 載入預設照片
+        ImageHandler.loadDefaultImage(this, () => {
+          // 自動填入預設資料
+          document.getElementById('petName').value = '大哥';
+          document.getElementById('petGender').value = '公';
+          document.getElementById('petBirthday').value = '2025-06-01';
+          document.getElementById('petBreed').value = '菜市場短毛貓';
+          document.getElementById('petAddress').value = '貓咪市罐頭區市場路 100 號';
+          // 自動去背
+          BackgroundRemoval.applyBackgroundRemoval(this);
+          // 等待去背完成再生成身分證
+          setTimeout(() => {
+            IdCardGenerator.generateIdCard(this);
+          }, 100);
+        });
+      });
     }
   }
 

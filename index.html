@@ -37,10 +37,16 @@
           <p class="text-sm text-gray-500">支援 JPG, PNG 格式</p>
           <input type="file" id="imageInput" accept="image/jpeg,image/png" class="hidden">
         </div>
-        
-        <button id="loadDefaultImageBtn" class="w-full mt-3 bg-gray-300 text-gray-800 py-2 px-4 rounded-md hover:bg-gray-400 transition-colors font-medium">
-          <i class="fas fa-image mr-2"></i>載入預設照片
-        </button>
+
+        <div class="flex gap-2">
+          <button id="loadDefaultImageBtn" class="w-full mt-3 bg-gray-300 text-gray-800 py-2 px-4 rounded-md hover:bg-gray-400 transition-colors font-medium">
+            <i class="fas fa-image mr-2"></i>載入預設照片
+          </button>
+          
+          <button id="generateDefaultIdBtn" class="w-full mt-3 bg-blue-400 text-white py-2 px-4 rounded-md hover:bg-blue-500 transition-colors font-medium">
+            <i class="fas fa-bolt mr-2"></i>直接生成預設身分證
+          </button>
+        </div>
 
         <!-- Original Image Preview -->
         <div id="originalImageContainer" class="mt-4 hidden">

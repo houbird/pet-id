@@ -138,13 +138,24 @@ class ImageHandler {
   }
 
   // 載入預設照片
-  static async loadDefaultImage(petIdGenerator) {
+  static async loadDefaultImage(petIdGenerator, callback) {
     try {
       const response = await fetch('images/dago_m.png');
       const blob = await response.blob();
       // 轉成 File 物件（模擬上傳）
       const file = new File([blob], 'dago_m.png', { type: blob.type });
       ImageHandler.handleImageUpload(file, petIdGenerator);
+      if (typeof callback === 'function') {
+        // 等待圖片載入完成再 callback
+        const checkLoaded = () => {
+          if (petIdGenerator.originalImage && petIdGenerator.originalImage.complete) {
+            callback();
+          } else {
+            setTimeout(checkLoaded, 50);
+          }
+        };
+        checkLoaded();
+      }
     } catch (err) {
       petIdGenerator.showError('預設照片載入失敗');
     }
